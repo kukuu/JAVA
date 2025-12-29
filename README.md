@@ -81,4 +81,5 @@ The core is building robust, secure, and interoperable systems that handle sensi
 - Phase 1: https://github.com/kukuu/JAVA/blob/main/Phase%201%3A%20Core%20Java%20Security%20%26%20Reliability%20-%20Detailed%20Analysis.md
 - Phase 2: https://github.com/kukuu/JAVA/blob/main/Phase%202%3A%20Data%20Handling%20%26%20Interoperability%20-%20Dependency%2C%20Impact%2C%20Exploitation%20%26%20Best%20Practices.md
 - Phase 3: https://github.com/kukuu/JAVA/blob/main/Phase%203%3A%20Specialized%20Defence%20%26%20LE%20Topics%20-%20Depth%20Analysis.md
+- Phase 4: https://github.com/kukuu/JAVA/blob/main/Phase%204%3A%20Architecture%20%26%20Deployment%20-%20Deep%20Analysis.md
 
