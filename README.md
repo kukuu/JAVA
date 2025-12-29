@@ -1,5 +1,4 @@
 # JAVA
-A practical, fast-track list of topics to cover - from foundation to advanced.
 
 Java for Law Enforcement and Defence requires a shift from generic enterprise development to a focus on 
 
