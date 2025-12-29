@@ -83,3 +83,5 @@ The core is building robust, secure, and interoperable systems that handle sensi
 - Phase 3: https://github.com/kukuu/JAVA/blob/main/Phase%203%3A%20Specialized%20Defence%20%26%20LE%20Topics%20-%20Depth%20Analysis.md
 - Phase 4: https://github.com/kukuu/JAVA/blob/main/Phase%204%3A%20Architecture%20%26%20Deployment%20-%20Deep%20Analysis.md
 
+## Projects
+- https://github.com/kukuu/JAVA/blob/main/Projects.md
