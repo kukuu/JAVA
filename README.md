@@ -76,3 +76,6 @@ The core is building robust, secure, and interoperable systems that handle sensi
 **Fast-Track Strategy:** Start with **Phase 1 (Core Java + Concurrency)**, then move immediately to **Data Handling & APIs (Phase 2)** while incorporating **Security (Phase 3)** into every project. **Phase 4 (Architecture)** can be learned in parallel as you containerize and secure your projects.
 
 <!--This path moves you from a Java developer to a Java developer capable of building the critical systems that support law enforcement and defence missions.-->
+
+## Tble List
+- https://github.com/kukuu/JAVA/blob/main/Phase%201%3A%20Core%20Java%20Security%20%26%20Reliability%20-%20Detailed%20Analysis.md
