@@ -77,5 +77,7 @@ The core is building robust, secure, and interoperable systems that handle sensi
 
 <!--This path moves you from a Java developer to a Java developer capable of building the critical systems that support law enforcement and defence missions.-->
 
-## Tble List
-- https://github.com/kukuu/JAVA/blob/main/Phase%201%3A%20Core%20Java%20Security%20%26%20Reliability%20-%20Detailed%20Analysis.md
+## Table List
+- Phase 1: https://github.com/kukuu/JAVA/blob/main/Phase%201%3A%20Core%20Java%20Security%20%26%20Reliability%20-%20Detailed%20Analysis.md
+- Phase 2: https://github.com/kukuu/JAVA/blob/main/Phase%202%3A%20Data%20Handling%20%26%20Interoperability%20-%20Dependency%2C%20Impact%2C%20Exploitation%20%26%20Best%20Practices.md
+
