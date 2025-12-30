@@ -4,3 +4,7 @@
 2.  **Real-Time Alert Correlation Engine:** Consumes multiple Kafka streams (e.g., 911 calls, social media keywords, sensor alerts), uses geospatial libraries to correlate by location, and flags potential critical incidents: https://chat.deepseek.com/a/chat/s/f156cf53-1c7f-4238-a9b5-100a68bb79d8 | https://github.com/kukuu/Real-Time-Alert-Correlation-Engine/blob/main/README.md
 3.  **Inter-Agency Data Gateway:** A REST/GraphQL API that aggregates data from different legacy sources (via file parsing, JDBC), enforces RBAC, and presents a unified view of a person or vehicle of interest.
 4.  **Tactical Communication Simulator:** A socket-based application simulating secure, low-bandwidth messaging between units, with message prioritization and delivery acknowledgment.
+
+
+- DS Queery
+  Use modern  JAVA framework, distributed architecture, cloud native and REACT best practices to design, build and test this project ''XXXXXX'. Provide the architecture, data flow, directory structure and the code" Make security, reliability, data integration core. Use REACT for the UI. Align this work with best practices from the LE - Law Enforcement expectations perspective - covering the 4 Phases defined earlier - ''Java with a Security & Reliability Mindset, Data Handling & Interoperability , Specialized Defence & LE Topics, and Architecture & Deployment''.Provide startup scripts for the terminal for backend and frontend. Provide ''COMPLETE RUNNING INSTRUCTIONS'' for rnunbook.md
