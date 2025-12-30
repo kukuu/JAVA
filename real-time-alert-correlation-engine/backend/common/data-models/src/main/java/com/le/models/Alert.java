@@ -1,0 +1,110 @@
+// backend/common/data-models/src/main/java/com/le/models/Alert.java
+//Data Models with Encryption
+
+package com.le.models;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonInclude;
+import io.swagger.v3.oas.annotations.media.Schema;
+import lombok.Data;
+import lombok.NoArgsConstructor;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.annotation.Transient;
+import org.springframework.data.mongodb.core.geo.GeoJsonPoint;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexType;
+import org.springframework.data.mongodb.core.index.GeoSpatialIndexed;
+import org.springframework.data.mongodb.core.index.Indexed;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import java.time.Instant;
+import java.util.List;
+import java.util.Map;
+
+@Data
+@NoArgsConstructor
+@Document(collection = "alerts")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "Base alert model with PII encryption")
+public class Alert {
+    
+    @Id
+    @Schema(description = "Unique alert identifier", example = "alert-12345")
+    private String id;
+    
+    @NotNull
+    @Schema(description = "Alert source type", example = "911_CALL")
+    private AlertSource source;
+    
+    @NotBlank
+    @Schema(description = "Alert source ID", example = "911-2024-001234")
+    private String sourceId;
+    
+    @NotNull
+    @Schema(description = "Alert timestamp")
+    private Instant timestamp;
+    
+    @NotBlank
+    @Schema(description = "Alert category", example = "EMERGENCY_MEDICAL")
+    private String category;
+    
+    @NotNull
+    @Schema(description = "Alert priority", example = "HIGH")
+    private Priority priority;
+    
+    @NotNull
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    @Schema(description = "Geospatial coordinates")
+    private GeoJsonPoint location;
+    
+    @Indexed
+    @Schema(description = "Encrypted PII data")
+    private String encryptedPii;
+    
+    @Transient
+    @JsonIgnore
+    @Schema(description = "Decrypted PII (transient)", hidden = true)
+    private Map<String, Object> piiData;
+    
+    @Schema(description = "Alert metadata")
+    private Map<String, Object> metadata;
+    
+    @Schema(description = "Confidence score 0-1")
+    private Double confidenceScore = 1.0;
+    
+    @Schema(description = "Correlation IDs")
+    private List<String> correlationIds;
+    
+    @Indexed
+    @Schema(description = "Incident ID if correlated")
+    private String incidentId;
+    
+    @Schema(description = "Audit trail")
+    private List<AuditEntry> auditTrail;
+    
+    public enum AlertSource {
+        CALL_911,
+        SOCIAL_MEDIA,
+        SENSOR,
+        BOLO,
+        PATROL
+    }
+    
+    public enum Priority {
+        LOW,
+        MEDIUM,
+        HIGH,
+        CRITICAL
+    }
+    
+    @Data
+    @NoArgsConstructor
+    public static class AuditEntry {
+        private Instant timestamp;
+        private String userId;
+        private String action;
+        private String details;
+        private String signature;
+    }
+}
