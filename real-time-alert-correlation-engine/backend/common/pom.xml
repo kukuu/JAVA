@@ -15,10 +15,10 @@
     <name>Common Utilities</name>
     
     <dependencies>
-        <!-- Add common dependencies here -->
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
+            <groupId>org.locationtech.jts</groupId>
+            <artifactId>jts-core</artifactId>
+            <version>1.19.0</version>
         </dependency>
     </dependencies>
 </project>

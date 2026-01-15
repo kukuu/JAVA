@@ -1,14 +1,11 @@
-// backend/correlation-engine/src/main/java/com/le/correlation/CorrelationService.java
-//Correlation Engine (Quarkus)
-
 package com.le.correlation;
 
 import io.quarkus.runtime.StartupEvent;
 import io.smallrye.mutiny.Multi;
 import io.smallrye.reactive.messaging.kafka.Record;
-import jakarta.enterprise.context.ApplicationScoped;
-import jakarta.enterprise.event.Observes;
-import jakarta.inject.Inject;
+import javax.enterprise.context.ApplicationScoped;
+import javax.enterprise.event.Observes;
+import javax.inject.Inject;
 import org.eclipse.microprofile.reactive.messaging.Incoming;
 import org.eclipse.microprofile.reactive.messaging.Outgoing;
 import org.jboss.logging.Logger;
@@ -16,7 +13,13 @@ import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.GeometryFactory;
 import org.locationtech.jts.geom.Point;
 import org.locationtech.jts.geom.PrecisionModel;
-
+import com.le.correlation.model.Severity;
+import com.le.correlation.model.Priority;
+import com.le.correlation.model.AlertSource;
+import com.le.correlation.model.IncidentEvaluation;
+import com.le.correlation.model.AlertCluster;
+import com.le.correlation.model.CorrelatedIncident;
+import com.le.correlation.model.Alert;
 import java.time.Duration;
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
@@ -47,47 +50,59 @@ public class CorrelationService {
             Multi<Record<String, Alert>> alerts) {
         
         return alerts
-            .group().by(alert -> generateClusterKey(alert.getPayload()))
-            .onItem().transformToMulti(group -> {
-                Alert alert = group.key();
-                return Multi.createFrom().iterable(group)
-                    .group().intoLists().of(Duration.ofSeconds(5), 100)
-                    .onItem().transformToMulti(alertList -> {
-                        return processAlertBatch(alertList, alert);
-                    });
+            .onItem().transformToMulti(alertRecord -> {
+                Alert alert = alertRecord.value();
+                String clusterKey = generateClusterKey(alert);
+                
+                // Get or create cluster
+                AlertCluster cluster = activeClusters.computeIfAbsent(clusterKey, 
+                    k -> new AlertCluster(k, new ArrayList<>()));
+                
+                // Add alert to cluster - USING getAlerts() method
+                cluster.getAlerts().add(alert);
+                
+                // Check if cluster should be evaluated
+                if (shouldEvaluateCluster(cluster)) {
+                    List<AlertCluster> clusters = geospatialService.performClustering(
+                        cluster.getAlerts(), CLUSTER_RADIUS_METERS
+                    );
+                    
+                    return Multi.createFrom().iterable(clusters)
+                        .onItem().transform(clust -> {
+                            IncidentEvaluation evaluation = ruleEngine.evaluate(clust);
+                            if (evaluation.isCritical()) {
+                                CorrelatedIncident incident = createIncident(clust, evaluation);
+                                removeProcessedAlerts(clust);
+                                return Record.of(incident.getId(), incident);
+                            }
+                            return null;
+                        })
+                        .filter(Objects::nonNull);
+                }
+                
+                return Multi.createFrom().empty();
             })
             .merge();
     }
     
-    private Multi<Record<String, CorrelatedIncident>> processAlertBatch(
-            List<Record<String, Alert>> alerts, Alert baseAlert) {
+    private boolean shouldEvaluateCluster(AlertCluster cluster) {
+        return cluster.size() >= 3 || 
+               Duration.between(cluster.getFirstAlertTime(), cluster.getLastAlertTime())
+                       .compareTo(Duration.ofMinutes(5)) > 0;
+    }
+    
+    private void removeProcessedAlerts(AlertCluster processedCluster) {
+        for (String alertId : processedCluster.getAlertIds()) {
+            activeClusters.values().forEach(cluster -> {
+                cluster.removeAlert(alertId);
+            });
+        }
         
-        List<Alert> alertBatch = alerts.stream()
-            .map(Record::getPayload)
-            .toList();
-        
-        // Geospatial clustering
-        List<AlertCluster> clusters = geospatialService.performClustering(
-            alertBatch, 
-            CLUSTER_RADIUS_METERS
-        );
-        
-        // Rule engine evaluation
-        return Multi.createFrom().iterable(clusters)
-            .onItem().transform(cluster -> {
-                IncidentEvaluation evaluation = ruleEngine.evaluate(cluster);
-                
-                if (evaluation.isCritical()) {
-                    CorrelatedIncident incident = createIncident(cluster, evaluation);
-                    return Record.of(incident.getId(), incident);
-                }
-                return null;
-            })
-            .filter(Objects::nonNull);
+        // Clean up empty clusters
+        activeClusters.values().removeIf(cluster -> cluster.size() == 0);
     }
     
     private String generateClusterKey(Alert alert) {
-        // Generate spatial-temporal key for grouping
         Point point = geometryFactory.createPoint(
             new Coordinate(
                 alert.getLocation().getX(),
@@ -95,20 +110,12 @@ public class CorrelationService {
             )
         );
         
-        long timeBucket = alert.getTimestamp().toEpochMilli() / 
-                         (TIME_WINDOW.toMillis());
+        long timeBucket = alert.getTimestamp().toEpochMilli() / TIME_WINDOW.toMillis();
         
-        return String.format("%d_%.4f_%.4f", 
-            timeBucket,
-            point.getX(),
-            point.getY()
-        );
+        return String.format("%d_%.4f_%.4f", timeBucket, point.getX(), point.getY());
     }
     
-    private CorrelatedIncident createIncident(
-            AlertCluster cluster, 
-            IncidentEvaluation evaluation) {
-        
+    private CorrelatedIncident createIncident(AlertCluster cluster, IncidentEvaluation evaluation) {
         CorrelatedIncident incident = new CorrelatedIncident();
         incident.setId(UUID.randomUUID().toString());
         incident.setTimestamp(java.time.Instant.now());
@@ -119,7 +126,6 @@ public class CorrelationService {
         incident.setRecommendedActions(evaluation.getRecommendedActions());
         incident.setPatternType(evaluation.getPatternType());
         
-        // Add forensic metadata
         incident.setForensicMetadata(Map.of(
             "cluster_size", cluster.size(),
             "sources", cluster.getSourceTypes(),
@@ -142,13 +148,13 @@ class RuleEngine {
         IncidentEvaluation evaluation = new IncidentEvaluation();
         List<String> triggeredRules = new ArrayList<>();
         
-        // Rule 1: Multiple high-priority alerts in same location
+        evaluation.setSeverity(Severity.MEDIUM);
+        
         if (cluster.countByPriority(Priority.HIGH) >= 3) {
             evaluation.setSeverity(Severity.CRITICAL);
             triggeredRules.add("MULTIPLE_HIGH_PRIORITY");
         }
         
-        // Rule 2: Mixed source correlation
         if (cluster.hasSource(AlertSource.CALL_911) && 
             cluster.hasSource(AlertSource.SOCIAL_MEDIA)) {
             evaluation.setSeverity(
@@ -158,13 +164,11 @@ class RuleEngine {
             triggeredRules.add("MULTI_SOURCE_CORRELATION");
         }
         
-        // Rule 3: Threat intelligence match
         if (threatIntelligence.checkLocation(cluster.getCentroid())) {
             evaluation.setSeverity(Severity.CRITICAL);
             triggeredRules.add("THREAT_INTEL_MATCH");
         }
         
-        // Rule 4: Temporal pattern (rapid succession)
         if (cluster.getTimeRange().toMillis() < Duration.ofMinutes(5).toMillis() &&
             cluster.size() >= 5) {
             evaluation.setSeverity(Severity.HIGH);
