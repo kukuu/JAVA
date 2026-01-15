@@ -1,4 +1,4 @@
-// frontend/src/services/api/alertService.ts
+
 import axios, { AxiosInstance, AxiosResponse, CancelTokenSource } from 'axios';
 import { encryptData } from '../../utils/encryption';
 import { API_CONFIG } from '../../utils/constants';

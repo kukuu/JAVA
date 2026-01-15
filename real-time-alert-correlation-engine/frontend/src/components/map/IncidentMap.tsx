@@ -1,4 +1,3 @@
-// frontend/src/components/map/IncidentMap.tsx
 import React, { useState, useEffect, useCallback, useRef, useMemo } from 'react';
 import {
   MapContainer,

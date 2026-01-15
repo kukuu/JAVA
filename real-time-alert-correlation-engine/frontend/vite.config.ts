@@ -1,17 +1,15 @@
-// frontend/vite.config.ts
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import { resolve } from 'path';
+import rewriteAll from 'vite-plugin-rewrite-all';
 
 export default defineConfig({
-  plugins: [react()],
-  resolve: {
-    alias: {
-      '@': resolve(__dirname, 'src'),
-    },
-  },
+  plugins: [
+    react(),
+    rewriteAll()  // ADD THIS PLUGIN
+  ],
   server: {
-    port: 3000,
+    port: 4000,
     host: true,
     open: true,
     proxy: {

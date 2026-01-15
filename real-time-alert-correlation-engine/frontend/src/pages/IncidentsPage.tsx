@@ -1,4 +1,3 @@
-// frontend/src/pages/IncidentsPage.tsx
 import React from 'react';
 
 const IncidentsPage: React.FC = () => {

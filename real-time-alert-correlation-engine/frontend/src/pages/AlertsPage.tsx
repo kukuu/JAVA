@@ -1,4 +1,3 @@
-// frontend/src/pages/AlertsPage.tsx
 import React, { useState } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { LoadingSpinner } from '../components/common/LoadingSpinner';

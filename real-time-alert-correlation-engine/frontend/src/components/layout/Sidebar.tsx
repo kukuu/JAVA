@@ -1,4 +1,3 @@
-// frontend/src/components/layout/Sidebar.tsx
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { 

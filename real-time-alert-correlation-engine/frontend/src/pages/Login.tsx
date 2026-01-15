@@ -1,4 +1,3 @@
-// frontend/src/pages/Login.tsx
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../hooks/useAuth';
@@ -96,6 +95,7 @@ const Login: React.FC = () => {
           <div className="text-center text-sm text-gray-600">
             <p>For technical support, contact your department IT</p>
             <p className="mt-1 text-xs text-gray-500">All access is logged and monitored</p>
+            <p className="mt-1 text-xs text-gray-500">Powered by <strong>AZZOTTO</strong></p>
           </div>
         </form>
       </div>

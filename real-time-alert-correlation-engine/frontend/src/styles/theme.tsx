@@ -1,4 +1,3 @@
-// frontend/src/styles/theme.tsx
 import React from 'react';
 
 interface ThemeProviderProps {

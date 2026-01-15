@@ -1,4 +1,3 @@
-// frontend/src/hooks/useWebSocket.ts
 import { useEffect, useRef, useState, useCallback } from 'react';
 
 interface WebSocketOptions {

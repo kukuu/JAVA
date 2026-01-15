@@ -1,4 +1,4 @@
-// frontend/src/components/dashboard/Dashboard.tsx
+
 import React, { useState, useEffect, useCallback } from 'react';
 import { useQuery, useQueryClient } from '@tanstack/react-query';
 import { useAuth } from '../../contexts/AuthContext';

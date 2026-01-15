@@ -1,4 +1,4 @@
-// frontend/src/contexts/AlertContext.tsx
+
 import React, { createContext, useContext, useState, useEffect } from 'react';
 
 interface Alert {
