@@ -5,7 +5,7 @@ Java for Law Enforcement and Defence requires a shift from generic enterprise de
 - **security**
 - **reliability**
 - **data integration**
-- **specialized processing**
+- **specialized processing** 
 
 The core is building robust, secure, and interoperable systems that handle sensitive, often real-time, data.
 
