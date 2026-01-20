@@ -13,7 +13,7 @@ The core is building robust, secure, and interoperable systems that handle sensi
 ## **Phase 1: Core Java with a Security & Reliability Mindset**  
 
 *   **Java 17+ Features:** Focus on features that enhance stability and security.
-    *   **Records:** For immutable data carriers (e.g., suspect records, evidence metadata). Ensures data integrity.
+    *   **Records:** For immutable data carriers (e.g., suspect records, evidence metadata). Ensures data integrity. 
     *   **Sealed Classes & Interfaces:** Control and document permissible subclasses (e.g., defining exact types of `Report` or `Alert`). Enhances security modelling.
     *   **Pattern Matching (`instanceof`, `switch`)**: Cleaner code for analyzing complex data structures (e.g., parsing intelligence feeds).
 *   **Advanced Concurrency & Multithreading:** Critical for real-time systems.
