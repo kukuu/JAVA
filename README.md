@@ -10,7 +10,7 @@ Java for Law Enforcement and Defence requires a shift from generic enterprise de
 The core is building robust, secure, and interoperable systems that handle sensitive, often real-time, data.
 
 
-## **Phase 1: Core Java with a Security & Reliability Mindset**
+## **Phase 1: Core Java with a Security & Reliability Mindset** 
 
 *   **Java 17+ Features:** Focus on features that enhance stability and security.
     *   **Records:** For immutable data carriers (e.g., suspect records, evidence metadata). Ensures data integrity.
