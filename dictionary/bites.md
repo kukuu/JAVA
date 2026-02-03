@@ -38,3 +38,24 @@ public class Product {
 }
 ```
 This ensures cleaner JSON by automatically omitting null/empty fields
+
+## @Schema
+Is a Swagger/OpenAPI annotation that provides metadata about API models, properties, parameters, or operations for API documentation generation.
+
+- Common uses:
+
+  - Add descriptions and examples to API schemas
+  - Define required fields, data types, and constraints
+  - Control how models appear in generated documentation
+  - Specify example values for properties and parameters
+```
+@Schema(description = "Represents a user account")
+public class User {
+    @Schema(description = "User's full name", example = "John Doe", required = true)
+    private String name;
+    
+    @Schema(description = "User's email address", example = "john@example.com")
+    private String email;
+}
+```
+This annotation helps generate clear, informative API documentation in tools like Swagger UI or OpenAPI-based documentation systems
