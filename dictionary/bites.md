@@ -8,5 +8,15 @@ It tells Jackson to ignore a specific field or method when converting Java objec
     - Hide sensitive data (like passwords) in API responses
     - Break circular references in object relationships
     - Exclude transient or calculated fields from JSON
+```
+
+public class User {
+    private String name;
+    private String email;
+    
+    @JsonIgnore  // Password won't appear in JSON
+    private String password;
+}
+```
 
 
