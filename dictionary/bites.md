@@ -30,7 +30,7 @@ Is a Jackson annotation that controls when a property should be included in JSON
   - @JsonInclude(Include.NON_EMPTY) – Exclude null, empty collections, empty strings, etc.
   - @JsonInclude(Include.NON_DEFAULT) – Exclude values equal to Java defaults
  
-  ```
+```
   @JsonInclude(JsonInclude.Include.NON_NULL)
 public class Product {
     private String name;  // Only appears if not null
