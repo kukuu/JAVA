@@ -74,3 +74,28 @@ public class User {
 }
 ```
 This single annotation gives you all getters, setters, toString(), equals()/hashCode(), and a constructor without writing any of them manually.
+
+## Lombok @NoArgsConstructor
+
+Is a Lombok annotation that automatically generates a no-argument (empty) constructor for a Java class
+
+## @Id 
+Is a Spring Data annotation that marks a field as the primary identifier (primary key) for an entity in database operations.
+
+## org.sprngframework.data.annotation.Transient 
+Is a Spring Data annotation that marks a field as temporary, excluding it from database persistence (saving or reading).
+
+```
+public class User {
+    @Id
+    private String id;
+    private String name;
+    
+    @Transient
+    private String temporaryToken; // Not stored in database
+}
+```
+
+This is the Spring Data equivalent of JPA's @javax.persistence.Transient, but works across various Spring Data modules (MongoDB, Redis, etc.)
+
+Its purpose is to explicitly mark a field that should be excluded from database storage/retrieval, keeping it only in the application's memory during runtime.
