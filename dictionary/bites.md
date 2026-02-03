@@ -138,3 +138,14 @@ public class User {
 
  ## java.time.Instant is
  Instant is a Java class representing a single moment in time (a timestamp) in UTC, with nanosecond precision, independent of time zones or calendars.
+
+ ```
+// Represents a specific moment in UTC, like "2024-03-15T14:30:00.123456789Z"
+Instant timestamp = Instant.now(); // Gets current UTC timestamp
+Instant specificTime = Instant.parse("2024-03-15T10:30:00Z"); // Fixed moment in UTC
+```
+## java.util.List 
+is a Java interface that represents an ordered collection of elements, allowing duplicates, index-based access, and maintaining insertion order.
+
+##  java.util.Map
+ Is a Java interface that stores key-value pairs, where each unique key maps to a single value, allowing fast retrieval of values by their associated keys.
