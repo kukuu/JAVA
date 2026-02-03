@@ -83,7 +83,7 @@ Is a Lombok annotation that automatically generates a no-argument (empty) constr
 Is a Spring Data annotation that marks a field as the primary identifier (primary key) for an entity in database operations.
 
 ## org.springframework.data.annotation.Transient 
-Is a Spring Data annotation that marks a field as temporary, excluding it from database persistence (saving or reading).
+@Transient Is a Spring Data annotation that marks a field as temporary, excluding it from database persistence (saving or reading).
 
 ```
 public class User {
@@ -99,3 +99,42 @@ public class User {
 This is the Spring Data equivalent of JPA's @javax.persistence.Transient, but works across various Spring Data modules (MongoDB, Redis, etc.)
 
 Its purpose is to explicitly mark a field that should be excluded from database storage/retrieval, keeping it only in the application's memory during runtime.
+
+## org.springframework.data.Mongodb.core.geo.GeoJsonPoint 
+
+@GeoJsonPoint is a Spring Data MongoDB class that represents a geographic location (longitude and latitude) in GeoJSON format for storing and querying geospatial data in MongoDB.
+
+## org.springframework.data.mongodb.core.index.GeoSpatialIndexType
+@GeoSpatialIndexType is an enum in Spring Data MongoDB that specifies the type of geospatial index (such as GEO_2DSPHERE or GEO_2D) to create for efficient location-based queries in MongoDB.
+
+## org.springframework.data.mongodb.core.index.GeoSpatialIndexed 
+@GeoSpatialIndexed Is a Spring Data MongoDB annotation that marks a field (like GeoJsonPoint) to have a geospatial database index created, enabling fast location-based queries such as "find near this point" or "within this area".
+
+
+## org.springframwork.data.mongodb.core.index.Indexed 
+@Indexed is a Spring Data MongoDB annotation that marks a field for database indexing, making queries on that field faster while slowing down write operations slightly.
+
+```
+
+public class User {
+    @Indexed
+    private String email; // Database will index this field
+}
+
+```
+
+## org.springframework.data.mongodb.core.mapping.Document
+
+ Is a Spring Data MongoDB annotation that marks a Java class as a persistable entity, mapping it to a MongoDB collection (like @Entity in JPA).
+
+
+
+ ## java.validation.constraints.NotBlank
+
+ @NotBls a Java validation constraint that ensures a string field is not null and contains at least one non-whitespace character.
+
+ ##  javax.validation.constraints.NotNull 
+ @NotNull  is a Java validation constraint that ensures a field, parameter, or return value is not null (but allows empty strings/collections).
+
+ ## java.time.Instant is
+ Instant is a Java class representing a single moment in time (a timestamp) in UTC, with nanosecond precision, independent of time zones or calendars.
