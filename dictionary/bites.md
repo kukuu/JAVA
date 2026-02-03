@@ -1,4 +1,5 @@
-- **@JsonIgnore**: Is a Jackson annotation used to exclude a property from JSON serialization and deserialization.
+## **@JsonIgnore**: 
+Is a Jackson annotation used to exclude a property from JSON serialization and deserialization.
 
 **In short:**
 
