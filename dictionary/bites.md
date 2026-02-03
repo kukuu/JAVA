@@ -59,3 +59,18 @@ public class User {
 }
 ```
 This annotation helps generate clear, informative API documentation in tools like Swagger UI or OpenAPI-based documentation systems
+
+## @Data 
+Is a Lombok annotation that automatically generates common boilerplate code for a Java class, including getters, setters, toString(), equals(), hashCode(), and a constructor for all final fields.
+
+- In practice:
+  - You replace dozens of lines of repetitive code with just @Data above your class.
+
+```
+@Data
+public class User {
+    private String name;
+    private String email;
+}
+```
+This single annotation gives you all getters, setters, toString(), equals()/hashCode(), and a constructor without writing any of them manually.
