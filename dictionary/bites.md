@@ -20,4 +20,12 @@ public class User {
 }
 ```
 
+## @JsonInclude 
 
+Is a Jackson annotation that controls when a property should be included in JSON output based on its value.
+
+- Common examples:
+
+  - @JsonInclude(Include.NON_NULL) – Exclude properties with null values
+  - @JsonInclude(Include.NON_EMPTY) – Exclude null, empty collections, empty strings, etc.
+  - @JsonInclude(Include.NON_DEFAULT) – Exclude values equal to Java defaults
