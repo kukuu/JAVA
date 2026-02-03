@@ -82,7 +82,7 @@ Is a Lombok annotation that automatically generates a no-argument (empty) constr
 ## @Id 
 Is a Spring Data annotation that marks a field as the primary identifier (primary key) for an entity in database operations.
 
-## org.sprngframework.data.annotation.Transient 
+## org.springframework.data.annotation.Transient 
 Is a Spring Data annotation that marks a field as temporary, excluding it from database persistence (saving or reading).
 
 ```
