@@ -149,3 +149,18 @@ is a Java interface that represents an ordered collection of elements, allowing 
 
 ##  java.util.Map
  Is a Java interface that stores key-value pairs, where each unique key maps to a single value, allowing fast retrieval of values by their associated keys.
+
+ ## @Bean
+ org.springframework.context.annotation.Bean
+
+The `org.springframework.context.annotation.Bean` annotation in Java is a method-level marker (**MLM**) used within `@Configuration` classes to explicitly declare a bean for the Spring IoC container. In Spring, a **bean** is simply an object that is instantiated, assembled, and managed by the Spring container. The benefits are significant: Spring handles the complete **lifecycle** of the object (creation, dependency injection, destruction); it promotes **loose coupling** through dependency injection; it ensures **consistent configuration** across environments; and it enables **cross-cutting concerns** (like transactions or security) to be applied declaratively. For example, defining a database connection pool as a bean ensures a single, consistently configured instance is available throughout your application:
+
+```
+@Configuration
+public class AppConfig {
+    @Bean
+    public DataSource dataSource() {
+        return new HikariDataSource(); // Spring manages this object
+    }
+}
+```
