@@ -12,7 +12,7 @@
 
 - Audit: Complete audit trail with non-repudiation
 
-# real-time-alert-correlation-engine/backend/common/data-models/src/main/java/com/le/models/Alert.java
+# backend/common/data-models/src/main/java/com/le/models/Alert.java
 
 ```
 // backend/common/data-models/src/main/java/com/le/models/Alert.java
