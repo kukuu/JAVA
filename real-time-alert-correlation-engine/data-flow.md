@@ -14,6 +14,8 @@
 
 # backend/common/data-models/src/main/java/com/le/models/Alert.java
 
+**Code**
+
 ```
 // backend/common/data-models/src/main/java/com/le/models/Alert.java
 //Data Models with Encryption
@@ -49,5 +51,100 @@ import java.util.Map;
 - **Validation constraints**: Ensure data integrity with field validations
 - **Java time/util**: Handle timestamps and collections in the model
 
+**Code**
 
+```
+@Data
+@NoArgsConstructor
+@Document(collection = "alerts")
+@JsonInclude(JsonInclude.Include.NON_NULL)
+@Schema(description = "Base alert model with PII encryption")
+public class Alert {
+    
+    @Id
+    @Schema(description = "Unique alert identifier", example = "alert-12345")
+    private String id;
+    
+    @NotNull
+    @Schema(description = "Alert source type", example = "911_CALL")
+    private AlertSource source;
+    
+    @NotBlank
+    @Schema(description = "Alert source ID", example = "911-2024-001234")
+    private String sourceId;
+    
+    @NotNull
+    @Schema(description = "Alert timestamp")
+    private Instant timestamp;
+    
+    @NotBlank
+    @Schema(description = "Alert category", example = "EMERGENCY_MEDICAL")
+    private String category;
+    
+    @NotNull
+    @Schema(description = "Alert priority", example = "HIGH")
+    private Priority priority;
+    
+    @NotNull
+    @GeoSpatialIndexed(type = GeoSpatialIndexType.GEO_2DSPHERE)
+    @Schema(description = "Geospatial coordinates")
+    private GeoJsonPoint location;
+    
+    @Indexed
+    @Schema(description = "Encrypted PII data")
+    private String encryptedPii;
+    
+    @Transient
+    @JsonIgnore
+    @Schema(description = "Decrypted PII (transient)", hidden = true)
+    private Map<String, Object> piiData;
+    
+    @Schema(description = "Alert metadata")
+    private Map<String, Object> metadata;
+    
+    @Schema(description = "Confidence score 0-1")
+    private Double confidenceScore = 1.0;
+    
+    @Schema(description = "Correlation IDs")
+    private List<String> correlationIds;
+    
+    @Indexed
+    @Schema(description = "Incident ID if correlated")
+    private String incidentId;
+    
+    @Schema(description = "Audit trail")
+    private List<AuditEntry> auditTrail;
+    
+    public enum AlertSource {
+        CALL_911,
+        SOCIAL_MEDIA,
+        SENSOR,
+        BOLO,
+        PATROL
+    }
+    
+    public enum Priority {
+        LOW,
+        MEDIUM,
+        HIGH,
+        CRITICAL
+    }
+    
+    @Data
+    @NoArgsConstructor
+    public static class AuditEntry {
+        private Instant timestamp;
+        private String userId;
+        private String action;
+        private String details;
+        private String signature;
+    }
+}
+```
+**Purpose**
+```
+- **Class-level annotations**: Lombok generates getters/setters (`@Data`) and no-arg constructor, Spring maps to MongoDB "alerts" collection, Jackson ignores null values in JSON output, and Swagger provides API documentation.
+- **Field definitions**: Define alert data structure with validation constraints (`@NotNull`/`@NotBlank`), database indexes for geospatial and regular fields, transient/ignored fields for unencrypted PII, and schema descriptions for API documentation.
+- **Nested enums and class**: Define allowed source types and priority levels with type safety, plus an inner audit entry class for tracking who modified alerts and when.
+```
 
