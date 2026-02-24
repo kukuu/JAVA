@@ -146,5 +146,14 @@ public class Alert {
 - **Class-level annotations**: Lombok generates getters/setters (`@Data`) and no-arg constructor, Spring maps to MongoDB "alerts" collection, Jackson ignores null values in JSON output, and Swagger provides API documentation.
 - **Field definitions**: Define alert data structure with validation constraints (`@NotNull`/`@NotBlank`), database indexes for geospatial and regular fields, transient/ignored fields for unencrypted PII, and schema descriptions for API documentation.
 - **Nested enums and class**: Define allowed source types and priority levels with type safety, plus an inner audit entry class for tracking who modified alerts and when.
+- **Transient  fields**: Are fields that are not persisted to the database. In this code:
+
+_private Map<String, Object>_ piiData is marked with @Transient, so it won't be stored in MongoDB
+
+It contains decrypted PII data that exists only in memory at runtime
+
+The actual encrypted PII is stored in the encryptedPii field that is persisted
+
+This pattern allows the application to work with decrypted data temporarily while ensuring only encrypted values are stored permanently in the database.
 
 
