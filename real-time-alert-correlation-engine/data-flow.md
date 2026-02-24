@@ -142,9 +142,9 @@ public class Alert {
 }
 ```
 **Purpose**
-```
+
 - **Class-level annotations**: Lombok generates getters/setters (`@Data`) and no-arg constructor, Spring maps to MongoDB "alerts" collection, Jackson ignores null values in JSON output, and Swagger provides API documentation.
 - **Field definitions**: Define alert data structure with validation constraints (`@NotNull`/`@NotBlank`), database indexes for geospatial and regular fields, transient/ignored fields for unencrypted PII, and schema descriptions for API documentation.
 - **Nested enums and class**: Define allowed source types and priority levels with type safety, plus an inner audit entry class for tracking who modified alerts and when.
-```
+
 
