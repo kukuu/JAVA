@@ -13,7 +13,7 @@
 - Audit: Complete audit trail with non-repudiation
 
 - Code Architecture
-  - 1. **Imports Strategy**
+    1. **Imports Strategy**
     2. **Domain Model Design Goals**
     3. **Business Logic Methods**
     4. **Design Patterns & Conventions**
