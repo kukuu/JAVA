@@ -12,7 +12,11 @@
 
 - Audit: Complete audit trail with non-repudiation
 
-
+- Code Architecture
+  - 1. **Imports Strategy**
+    2. **Domain Model Design Goals**
+    3. **Business Logic Methods**
+    4. **Design Patterns & Conventions**
 
 # backend/common/data-models/src/main/java/com/le/models/Alert.java
 
@@ -134,7 +138,53 @@ This is a **core domain entity** designed to support:
 - **Audit trail**: Tracking when alerts occurred with precise timestamps
 
 
+## real-time-alert-correlation-engine/backend/common/src/main/java/com/le/correlation/model/AlertCluster.java
+
+This is a **domain model class** representing an `AlertCluster` - a grouping of related alerts after correlation.
+### Overall Purpose
+This file defines the data structure for a **cluster of correlated alerts**, representing a collection of related security events that have been grouped together based on patterns, proximity, or relationships.
+
+### Key Components & Goals
+
+#### 1. **Imports Strategy**
+- **Geospatial Support**: Uses JTS `Point` for the cluster's geographic center (centroid)
+- **Temporal Support**: 
+  - `Instant` for precise start/end times of the cluster
+  - `Duration` for calculating the time span of the cluster
+- **Collection Support**: `List` for ordered alert IDs, `Set` for unique source types
+
+#### 2. **Domain Model Design Goals**
+
+The `AlertCluster` class establishes a **correlation result** with:
+
+- **Alert References**: `alertIds` list linking to individual alerts in the cluster
+- **Geospatial Summary**: `centroid` representing the average geographic location of all alerts
+- **Temporal Boundaries**: `startTime` and `endTime` defining the cluster's time window
+- **Source Diversity**: `sourceTypes` set tracking which systems generated the alerts
+
+#### 3. **Business Logic Methods**
+
+The class provides derived information:
+
+- **Cluster Size**: `size()` returns the number of alerts in the cluster
+- **Priority Distribution**: `countByPriority()` - Note: Currently returns `size()/2` as a placeholder/demo implementation
+- **Source Membership**: `hasSource()` checks if alerts from a specific source are in the cluster
+- **Time Range**: `getTimeRange()` calculates the duration between earliest and latest alert
+
+#### 4. **Design Patterns & Conventions**
+- **Derived Properties**: Methods like `getTimeRange()` compute values rather than storing them
+- **JavaBean Pattern**: Standard getters/setters for framework compatibility
+- **Immutable-like Structure**: Encapsulated fields with controlled access
+
+This is a **correlation output entity** designed to:
+
+- **Group related alerts**: Reducing alert noise through correlation
+- **Provide summary statistics**: Geographic center, time span, and composition
+- **Enable analysis**: Query cluster properties (size, sources, time range)
+- **Support visualization**: Centroid for mapping, time range for timeline display
+
 .......
+  
 .......
 
 **Code**
