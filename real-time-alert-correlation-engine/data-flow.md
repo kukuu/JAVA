@@ -51,6 +51,53 @@ import java.util.Map;
 - **Validation constraints**: Ensure data integrity with field validations
 - **Java time/util**: Handle timestamps and collections in the model
 
+## real-time-alert-correlation-engine/backend/common/security-core/src/main/java/com/le/security/SecurityConfig.java
+
+**purpose**
+
+Yes, I understand. This is a **Spring Security configuration file** for a reactive web application. Let me summarize what it's trying to achieve:
+
+### Overall Purpose
+This file configures security for a reactive microservice, implementing **OAuth2 resource server** capabilities with JWT-based authentication and comprehensive security controls.
+
+### Key Components & Goals
+
+#### 1. **Imports Strategy**
+- **Reactive Security**: Uses WebFlux security (`EnableWebFluxSecurity`) for non-blocking, reactive applications
+- **JWT Support**: Imports Nimbus for JWT decoding and validation
+- **CORS Configuration**: Includes reactive CORS support for cross-origin requests
+- **Reactive Types**: Uses `Mono` and reactive streams for non-blocking operations
+
+#### 2. **Security Configuration Goals**
+The `securityWebFilterChain` method establishes:
+- **CSRF Protection**: Disabled (common for stateless REST APIs using tokens)
+- **CORS**: Enables cross-origin requests with specific configuration
+- **Authorization Rules**:
+  - Public access to health and Prometheus endpoints
+  - Scope-based authorization for API endpoints:
+    - `/alerts/**` requires `SCOPE_alerts:read`
+    - `/correlation/**` requires `SCOPE_correlation:write`
+  - All other endpoints require authentication
+- **OAuth2 Resource Server**: Validates JWT tokens from the authorization server
+- **Security Headers**: Implements CSP, XSS protection, and frame options
+
+#### 3. **CORS Configuration**
+Configures browser security for frontend access:
+- Allows only specific origin (`dashboard.le.example.com`)
+- Permits common HTTP methods and headers
+- Enables credentials (cookies, authorization headers)
+- Caches preflight responses for 1 hour
+
+#### 4. **JWT Decoder**
+Sets up token validation by pointing to the OIDC provider's JWKS endpoint, which provides the public keys to verify JWT signatures.
+
+This is a **production-ready security configuration** that implements industry best practices for a reactive microservice in a microservices architecture.
+
+
+
+
+.......
+
 **Code**
 
 ```
