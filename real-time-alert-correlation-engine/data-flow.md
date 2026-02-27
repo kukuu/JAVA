@@ -55,7 +55,6 @@ import java.util.Map;
 
 **purpose**
 
-Yes, I understand. This is a **Spring Security configuration file** for a reactive web application. Let me summarize what it's trying to achieve:
 
 ### Overall Purpose
 This file configures security for a reactive microservice, implementing **OAuth2 resource server** capabilities with JWT-based authentication and comprehensive security controls.
