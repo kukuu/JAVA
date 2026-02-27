@@ -98,7 +98,7 @@ This is a **production-ready security configuration** that implements industry b
 
 
 
-
+## real-time-alert-correlation-engine/backend/common/src/main/java/com/le/correlation/model/Alert.java
 
 
 .......
