@@ -132,6 +132,8 @@ This is a **core domain entity** designed to support:
 - **Geographic visualization**: Mapping alerts by location
 - **Prioritization**: Filtering and routing based on severity
 - **Audit trail**: Tracking when alerts occurred with precise timestamps
+
+
 .......
 .......
 
