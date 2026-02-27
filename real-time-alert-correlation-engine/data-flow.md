@@ -183,6 +183,43 @@ This is a **correlation output entity** designed to:
 - **Enable analysis**: Query cluster properties (size, sources, time range)
 - **Support visualization**: Centroid for mapping, time range for timeline display
 
+
+## real-time-alert-correlation-engine/backend/common/src/main/java/com/le/correlation/model/AlertSource.java
+
+This is a simple but important foundational **enumeration class** defining the possible sources of alerts in the system. It  ensures consistent source classification across the entire alert correlation system.
+
+### Overall Purpose
+This file defines a **type-safe enumeration** of all possible origins from which alerts can be generated in the system, providing a controlled vocabulary for alert source classification.
+
+### Key Components & Goals
+
+#### 1. **Design Intent**
+- **Source Categorization**: Defines 6 distinct alert source types:
+  - `CALL_911`: Emergency phone calls (police/fire/medical)
+  - `SOCIAL_MEDIA`: Posts from platforms like Twitter, Facebook, etc.
+  - `CCTV`: Closed-circuit television camera systems
+  - `SENSOR`: IoT devices, environmental monitors, motion detectors
+  - `MOBILE_APP`: User reports from mobile applications
+  - `WEB_PORTAL`: Reports submitted through web interfaces
+
+#### 2. **What It Achieves**
+
+- **Type Safety**: Prevents string typos and invalid source values
+- **Domain Vocabulary**: Establishes a shared language across the codebase
+- **Extensibility**: Easy to add new sources (e.g., `DRONE`, `RADIO`, `EMAIL`)
+- **Classification Foundation**: Enables filtering, routing, and processing logic based on source type
+- **Integration Points**: Used by `Alert` and `AlertCluster` classes for source tracking and analysis
+
+#### 3. **Usage Patterns in the System**
+
+This enum enables:
+
+- **Alert origin tracking**: Every alert has a source
+- **Cluster diversity analysis**: Tracking which source types appear in a cluster (`AlertCluster.hasSource()`)
+- **Source-specific processing**: Different handling for 911 calls vs. social media
+- **Reliability weighting**: Sensor data might be treated differently than social media posts
+
+
 .......
   
 .......
