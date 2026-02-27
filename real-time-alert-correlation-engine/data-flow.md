@@ -56,9 +56,6 @@ import java.util.Map;
 
 ## real-time-alert-correlation-engine/backend/common/security-core/src/main/java/com/le/security/SecurityConfig.java
 
-**purpose**
-
-
 ### Overall Purpose
 This file configures security for a reactive microservice, implementing **OAuth2 resource server** capabilities with JWT-based authentication and comprehensive security controls.
 
@@ -100,7 +97,42 @@ This is a **production-ready security configuration** that implements industry b
 
 ## real-time-alert-correlation-engine/backend/common/src/main/java/com/le/correlation/model/Alert.java
 
+**Purpose**
 
+ This is a **domain model class** representing an `Alert` entity. 
+
+### Overall Purpose
+This file defines the data structure for an **alert** in the correlation module, likely representing security events, incidents, or notifications that need to be processed and correlated.
+
+### Key Components & Goals
+
+#### 1. **Imports Strategy**
+- **Geospatial Support**: Uses JTS (Java Topology Suite) `Point` for location data, enabling geographic coordinates and spatial queries
+- **Temporal Support**: Uses `Instant` for precise, timezone-aware timestamps (UTC-based)
+- **Flexible Data**: Uses `Map<String, Object>` for extensible metadata without schema rigidity
+
+#### 2. **Domain Model Design Goals**
+
+The `Alert` class establishes a rich domain object with:
+
+- **Unique Identification**: `id` field for tracking and referencing specific alerts
+- **Source Tracking**: `AlertSource` enum/class to identify where the alert originated
+- **Priority Classification**: `Priority` enum/class for severity levels (likely CRITICAL, HIGH, MEDIUM, LOW)
+- **Geospatial Context**: `Point` location to pin-point where the alert occurred (latitude/longitude)
+- **Temporal Precision**: `Instant` timestamp for exact event time, crucial for correlation and sequencing
+- **Extensibility**: `metadata` map for additional context without changing the data model
+
+#### 3. **Design Patterns & Conventions**
+- **JavaBean Pattern**: Standard getters/setters for compatibility with frameworks (Spring, Jackson serialization)
+- **Immutable-like Structure**: Fields are privately encapsulated, controlled access via methods
+- **Type Safety**: Strong typing for core fields (String, enum, Point, Instant) with flexibility only in metadata
+
+This is a **core domain entity** designed to support:
+- **Alert correlation**: Finding relationships between alerts based on time, location, and metadata
+- **Geographic visualization**: Mapping alerts by location
+- **Prioritization**: Filtering and routing based on severity
+- **Audit trail**: Tracking when alerts occurred with precise timestamps
+.......
 .......
 
 **Code**
